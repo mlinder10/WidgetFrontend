@@ -1,0 +1,44 @@
+BOARDS:
+
+    query {
+        boards(ids: ${(JSON.stringify(ids)}) {
+            name
+            id
+            items {
+                group {
+                    id
+                    title
+                }
+                column_values {
+                    type
+                    title
+                    text
+                    id
+                }
+            }
+        }
+    }
+
+------------------------------------------
+
+SETTINGS:
+
+    benchmarkDirection: null
+
+    benchmarkValue: ""
+
+    columns: {}
+
+    function: null
+
+    goal: ""
+
+    groups: {}
+
+    tickerCadence: null
+
+    tickerDirection: null
+
+    type: null
+
+    unit: ""
