@@ -2,6 +2,7 @@ export const boardsQuery = (ids) => {
   return `
   query {
     boards(ids: ${JSON.stringify(ids)}) {
+      workspace_id
       id
       name
       items {
