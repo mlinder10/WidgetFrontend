@@ -64,7 +64,7 @@ export default function App() {
     try {
       const res = await monday.api(boardsQuery(ids));
       setBoards(res.data.boards);
-      setAccountId(res.data.boards[0].workspace_id)
+      setAccountId(res.data.boards[0].workspace_id);
     } catch {
       return [];
     }
@@ -75,13 +75,13 @@ export default function App() {
       const res = await fetch(backendUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: apiKey },
-        body: JSON.stringify({ id: id, ...values })
+        body: JSON.stringify({ id: id, ...values }),
       });
       const json = await res.json();
       setTicker(json);
-      console.log(json)
+      console.log(json);
     } catch (err) {
-      console.error(err?.message);
+      console.error(err);
     }
   }
 

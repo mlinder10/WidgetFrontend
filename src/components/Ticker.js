@@ -2,6 +2,8 @@ import React from "react";
 import { isWithinOneWeek } from "../Functions";
 
 export default function Ticker({ values, ticker, settings }) {
+  if (ticker.values === undefined) return null
+
   function change() {
     switch (settings.function) {
       case "sum":
