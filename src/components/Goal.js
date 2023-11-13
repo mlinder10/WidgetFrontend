@@ -4,7 +4,7 @@ export default function Goal({ values, boards, settings }) {
   function Percentage() {
     try {
       const goal = parseInt(settings.goal);
-      return Current() / goal > 1 ? 1 : Current() > goal;
+      return (Current() / goal > 1) ? 1 : Current() / goal;
     } catch {
       return 0;
     }
@@ -36,6 +36,7 @@ export default function Goal({ values, boards, settings }) {
       const color = `rgb(${Math.floor(255 - 255 * Percentage())}, ${Math.floor(
         255 * Percentage()
       )}, 0)`;
+      return color
     } catch {
       return "blue";
     }
@@ -45,12 +46,13 @@ export default function Goal({ values, boards, settings }) {
     <div className="goal-root">
       <div className="goal-info">
         <p>{Current()}</p>
+        <p>{`${Percentage()*100}%`}</p>
         <p>{settings.goal}</p>
       </div>
       <div className="goal-outline">
         <div
           className="goal-fill"
-          style={{ backgroundColor: `green`, width: `${Width()}vw` }}
+          style={{ backgroundColor: Color(), width: `${Width()}vw` }}
         ></div>
       </div>
     </div>
