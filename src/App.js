@@ -90,16 +90,16 @@ export default function App() {
     return (
       <div>
         {settings.type === "numbers" && (
-          <Number values={values} boards={boards} settings={settings} />
+          <Number values={values} settings={settings} />
         )}
         {settings.type === "ticker" && (
-          <Ticker values={values} boards={boards} settings={settings} />
+          <Ticker values={values} ticker={ticker} settings={settings} />
         )}
         {settings.type === "benchmark" && (
-          <Benchmark values={values} boards={boards} settings={settings} />
+          <Benchmark values={values} settings={settings} />
         )}
         {settings.type === "goal" && (
-          <Goal values={values} boards={boards} settings={settings} />
+          <Goal values={values} settings={settings} />
         )}
       </div>
     );

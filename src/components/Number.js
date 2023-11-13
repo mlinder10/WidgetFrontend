@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function Number({ values, boards, settings }) {
-  function Value() {
+export default function Number({ values, settings }) {
+  function value() {
     switch (settings.function) {
       case "sum":
         return values.sum
@@ -18,7 +18,7 @@ export default function Number({ values, boards, settings }) {
     }
   }
 
-  function Units() {
+  function units() {
     let unit = (settings?.unit === undefined) ? "" : settings.unit.symbol
     if (unit === "custom") unit = settings.unit.custom_unit
     return unit
@@ -26,8 +26,8 @@ export default function Number({ values, boards, settings }) {
 
   return (
     <>
-    {settings.unit.direction === "left" && <p>{`${Units()}${Value()}`}</p>}
-    {settings.unit.direction === "right" && <p>{`${Value()}${Units()}`}</p>}
+    {settings.unit.direction === "left" && <p>{`${units()}${value()}`}</p>}
+    {settings.unit.direction === "right" && <p>{`${value()}${units()}`}</p>}
     </>
   );
 }

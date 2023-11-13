@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function Benchmark({ values, boards, settings }) {
-  function Current() {
+export default function Benchmark({ values, settings }) {
+  function current() {
     switch (settings.function) {
       case "sum":
         return values.sum;
@@ -18,15 +18,15 @@ export default function Benchmark({ values, boards, settings }) {
     }
   }
 
-  function Color() {
+  function color() {
     const increasing = settings.benchmarkDirection === "increasing";
     try {
       const target = parseInt(settings.benchmarkValue);
       if (increasing) {
-        if (Current() >= target) return "#0f0";
+        if (current() >= target) return "#0f0";
         else return "#f00";
       }
-      if (Current() > target) return "#f00";
+      if (current() > target) return "#f00";
       else return "#0f0";
     } catch {
       return "initial";
@@ -38,7 +38,7 @@ export default function Benchmark({ values, boards, settings }) {
       <div>Target: {settings.benchmarkValue}</div>
       <div className={"benchmark-current"}>
         <p>Current:</p>
-        <p style={{color: Color()}}>{Current()}</p>
+        <p style={{ color: color() }}>{current()}</p>
       </div>
     </div>
   );
