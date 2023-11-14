@@ -17,6 +17,7 @@ import Ticker from "./components/Ticker";
 import Benchmark from "./components/Benchmark";
 import Goal from "./components/Goal";
 import { backendUrl, defaultValues, apiKey } from "./constants";
+import axios from "axios";
 
 const monday = mondaySdk();
 monday.setToken(
@@ -27,8 +28,8 @@ export default function App() {
   const [accountId, setAccountId] = useState(0);
   const [boards, setBoards] = useState([]);
   const [settings, setSettings] = useState({});
-  const [values, setValues] = useState(defaultValues);
-  const [ticker, setTicker] = useState({});
+  const [values, setValues] = useState(undefined);
+  const [ticker, setTicker] = useState(undefined);
 
   useEffect(() => {
     monday.listen("context", (res) => {
@@ -44,8 +45,8 @@ export default function App() {
   }, [boards, settings]);
 
   useEffect(() => {
-    if (typeof accountId === "number") fetchTickerValues();
-  }, [accountId]);
+    if (typeof accountId === "number" && values !== undefined) fetchTickerValues();
+  }, [accountId, values]);
 
   function updateValues() {
     if (settings.type === undefined) return;
@@ -70,23 +71,21 @@ export default function App() {
     }
   }
 
-  async function fetchTickerValues(id) {
+  async function fetchTickerValues() {
     try {
-      const res = await fetch(backendUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: apiKey },
-        body: JSON.stringify({ id: id, ...values }),
-      });
-      const json = await res.json();
-      setTicker(json);
-      console.log(json);
+      const res = await axios.post(
+        backendUrl,
+        { id: accountId, ...values },
+        { headers: { Authorization: apiKey } }
+      );
+      setTicker(res.data.ticker);
     } catch (err) {
       console.error(err);
     }
   }
 
   function Root() {
-    if (settings?.type === undefined) return null;
+    if (settings?.type === undefined || values === undefined) return <div>Loading...</div>;
     return (
       <div>
         {settings.type === "numbers" && (

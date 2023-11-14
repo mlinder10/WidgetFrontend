@@ -2,22 +2,22 @@ import React from "react";
 import { isWithinOneWeek } from "../Functions";
 
 export default function Ticker({ values, ticker, settings }) {
-  if (ticker.values === undefined) return null
+  if (ticker === undefined) return <div>Loading...</div>;
 
   function change() {
     switch (settings.function) {
       case "sum":
-        return values.sum / Math.floor(tickerValue().sum * 100) / 100;
+        return values.sum - tickerValue().sum;
       case "min":
-        return values.min / Math.floor(tickerValue().min * 100) / 100;
+        return values.min - tickerValue().min;
       case "max":
-        return values.max / Math.floor(tickerValue().max * 100) / 100;
+        return values.max - tickerValue().max;
       case "count":
-        return values.count / Math.floor(tickerValue().count * 100) / 100;
+        return values.count - tickerValue().count;
       case "median":
-        return values.median / Math.floor(tickerValue().median * 100) / 100;
+        return values.median - tickerValue().median;
       case "average":
-        return values.average / Math.floor(tickerValue().average * 100) / 100;
+        return values.average - tickerValue().average;
     }
   }
 
@@ -36,10 +36,17 @@ export default function Ticker({ values, ticker, settings }) {
     }
   }
 
+  function arrowType() {
+    if (settings.tickerDirection === "increasing") {
+      return change() >=0 ? "arrow-up" : "arrow-down"
+    }
+    return change() < 0 ? "arrow-up" : "arrow-down"
+  }
+
   return (
-    <div>
-      <p>{change()}</p>
-      <div className={`${change() >= 1 ? "arrow-up" : "arrow-down"}`}></div>
+    <div className="ticker-root">
+      <div className={arrowType()}></div>
+      <p>{Math.abs(change())}</p>
     </div>
   );
 }

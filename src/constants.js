@@ -1,4 +1,4 @@
-export const backendUrl = "https://numbers-widget.vercel.app"
+export const backendUrl = "https://widget-backend.vercel.app/"
 
 export const apiKey = "vb9q3478ge48orhfiavi3qi48gbifer8e3"
 

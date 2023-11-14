@@ -12,12 +12,17 @@ body {
   font-size: 6rem;
 }
 
+.ticker-root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .arrow-up {
   width: 0; 
   height: 0; 
   border-left: 2rem solid transparent;
   border-right: 2rem solid transparent;
-  
   border-bottom: 3rem solid #0f0;
 }
 
@@ -26,7 +31,6 @@ body {
   height: 0; 
   border-left: 2rem solid transparent;
   border-right: 2rem solid transparent;
-  
   border-top: 3rem solid #f00;
 }
 

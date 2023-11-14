@@ -12,6 +12,7 @@
     "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
+    "axios": "^1.6.1",
     "monday-sdk-js": "^0.1.4",
     "monday-ui-react-core": "^1.54.0"
   },
