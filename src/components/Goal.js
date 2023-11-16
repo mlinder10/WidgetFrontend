@@ -3,9 +3,7 @@ import React from "react";
 export default function Goal({ values, settings }) {
   function getGoal() {
     try {
-      console.log(parseInt(settings.goal))
-      console.log(typeof parseInt(settings.goal))
-      if (typeof parseInt(settings.goal) === NaN) return 0;
+      if (isNaN(parseInt(settings.goal))) return 0;
       return parseInt(settings.goal);
     } catch {
       return 0;

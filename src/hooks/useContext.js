@@ -24,6 +24,7 @@ export default function useContext() {
 
   useEffect(() => {
     monday.listen("context", (res) => {
+      console.log(res.data)
       fetchBoards(res.data.boardIds, settings?.columns);
       setTheme(res.data.theme);
     });
