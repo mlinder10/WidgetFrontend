@@ -1,3 +1,7 @@
+:root {
+  --secondary: #444;
+}
+
 body {
   margin: 0;
   font-family: "Roboto", sans-serif;
@@ -20,16 +24,16 @@ body {
 }
 
 .arrow-up {
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 2rem solid transparent;
   border-right: 2rem solid transparent;
   border-bottom: 3rem solid #0f0;
 }
 
 .arrow-down {
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 2rem solid transparent;
   border-right: 2rem solid transparent;
   border-top: 3rem solid #f00;
@@ -38,33 +42,56 @@ body {
 .goal-root {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .goal-info {
-  width: 80vw;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  font-size: 2rem;
+  align-items: center;
+  gap: 8px;
+}
+
+.goal-current {
+  font-size: 3rem;
+}
+
+.goal-goal {
+  font-size: 1.5rem;
+  color: var(--secondary);
 }
 
 .goal-outline {
   width: 80vw;
-  height: 50px;
-  border: thin solid black;
+  height: 20px;
   background-color: gray;
+  border-radius: 30px;
 }
 
 .goal-fill {
   height: 100%;
+  position: relative;
+  border-radius: 30px;
+}
+
+.goal-arrow {
+  position: absolute;
+  right: 0;
+  translate: 50% 0;
+  bottom: 140%;
+  width: 0;
+  height: 0;
+  border-left: .5rem solid transparent;
+  border-right: .5rem solid transparent;
+  border-top: .5rem solid var(--secondary);
 }
 
 @media (prefers-color-scheme: dark) {
-  .App {
-    color: white
+  :root {
+    --secondary: #bbb;
   }
 
-  .goal-outline {
-    border-color: white;
+  .App {
+    color: white;
   }
 }

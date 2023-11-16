@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import mondaySdk from "monday-sdk-js";
 import "monday-ui-react-core/dist/main.css";
+import { Loader } from "monday-ui-react-core";
 import {
   boardsQuery,
   sumFunc,
@@ -16,7 +17,7 @@ import Number from "./components/Number";
 import Ticker from "./components/Ticker";
 import Benchmark from "./components/Benchmark";
 import Goal from "./components/Goal";
-import { backendUrl, defaultValues, apiKey } from "./constants";
+import { backendUrl, apiKey } from "./constants";
 import axios from "axios";
 
 const monday = mondaySdk();
@@ -45,7 +46,8 @@ export default function App() {
   }, [boards, settings]);
 
   useEffect(() => {
-    if (typeof accountId === "number" && values !== undefined) fetchTickerValues();
+    if (typeof accountId === "number" && values !== undefined)
+      fetchTickerValues();
   }, [accountId, values]);
 
   function updateValues() {
@@ -85,7 +87,7 @@ export default function App() {
   }
 
   function Root() {
-    if (settings?.type === undefined || values === undefined) return <div>Loading...</div>;
+    if (settings?.type === undefined || values === undefined) return <Loader size={Loader.sizes.SMALL} />;
     return (
       <div>
         {settings.type === "numbers" && (

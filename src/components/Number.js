@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Number({ values, settings }) {
+export default function Number({ style, values, settings }) {
   function value() {
     switch (settings.function) {
       case "sum":
@@ -26,8 +26,8 @@ export default function Number({ values, settings }) {
 
   return (
     <>
-    {settings.unit.direction === "left" && <p>{`${units()}${value()}`}</p>}
-    {settings.unit.direction === "right" && <p>{`${value()}${units()}`}</p>}
+    {settings.unit.direction === "left" && <p style={style}>{`${units()}${value()}`}</p>}
+    {settings.unit.direction === "right" && <p style={style}>{`${value()}${units()}`}</p>}
     </>
   );
 }

@@ -4,7 +4,9 @@ export default function Goal({ values, settings }) {
   function percentage() {
     try {
       const goal = parseInt(settings.goal);
-      return current() / goal > 1 ? 1 : Math.round(current() / goal * 100) / 100;
+      return current() / goal > 1
+        ? 1
+        : Math.round((current() / goal) * 100) / 100;
     } catch {
       return 0;
     }
@@ -33,24 +35,25 @@ export default function Goal({ values, settings }) {
 
   function color() {
     try {
-      return `hsl(${Math.floor(125 * percentage())}, 100%, 50%)`
+      return `hsl(${Math.floor(125 * percentage())}, 100%, 50%)`;
     } catch {
-      return "green"
+      return "green";
     }
   }
 
   return (
     <div className="goal-root">
       <div className="goal-info">
-        <p>{current()}</p>
-        <p>{`${percentage() * 100}%`}</p>
-        <p>{settings.goal}</p>
+        <p className="goal-current">{current()}</p>
+        <p className="goal-goal"> / {parseInt(settings.goal)}</p>
       </div>
       <div className="goal-outline">
         <div
           className="goal-fill"
           style={{ backgroundColor: color(), width: `${width()}vw` }}
-        ></div>
+        >
+          <div className="goal-arrow" />
+        </div>
       </div>
     </div>
   );
