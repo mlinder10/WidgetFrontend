@@ -21,9 +21,6 @@ import { backendUrl, apiKey } from "./constants";
 import axios from "axios";
 
 const monday = mondaySdk();
-monday.setToken(
-  "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI5MjE3NzEzMiwiYWFpIjoxMSwidWlkIjo1MDcxNzk3OCwiaWFkIjoiMjAyMy0xMC0yN1QwMjozMzoxOC4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6OTI2MzkxNSwicmduIjoidXNlMSJ9.1Goh2-01bUKDAtDg80_K20WooMWB2OQxAxSyQQ7czj8"
-);
 
 export default function App() {
   const [accountId, setAccountId] = useState(0);
@@ -31,10 +28,13 @@ export default function App() {
   const [settings, setSettings] = useState({});
   const [values, setValues] = useState(undefined);
   const [ticker, setTicker] = useState(undefined);
+  const [theme, setTheme] = useState("dark")
 
   useEffect(() => {
     monday.listen("context", (res) => {
+      console.log(res)
       fetchBoards(res.data.boardIds, settings?.columns);
+      setTheme(res.data.theme)
     });
     monday.listen("settings", (res) => {
       setSettings(res.data);
@@ -107,7 +107,7 @@ export default function App() {
   }
 
   return (
-    <div className="App">
+    <div className={`${theme} App`}>
       <Root />
     </div>
   );

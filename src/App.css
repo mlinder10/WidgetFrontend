@@ -86,12 +86,7 @@ body {
   border-top: .5rem solid var(--secondary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --secondary: #bbb;
-  }
-
-  .App {
-    color: white;
-  }
+.dark, .black {
+  --secondary: #bbb;
+  color: white
 }
