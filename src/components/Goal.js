@@ -33,12 +33,9 @@ export default function Goal({ values, settings }) {
 
   function color() {
     try {
-      const color = `rgb(${Math.floor(255 - 255 * percentage())}, ${Math.floor(
-        255 * percentage()
-      )}, 0)`;
-      return color;
+      return `hsl(${Math.floor(125 * percentage())}, 100%, 50%)`
     } catch {
-      return "blue";
+      return "green"
     }
   }
 

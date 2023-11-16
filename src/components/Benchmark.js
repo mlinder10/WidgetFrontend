@@ -1,4 +1,5 @@
 import React from "react";
+import Number from "./Number";
 
 export default function Benchmark({ values, settings }) {
   function current() {
@@ -34,12 +35,8 @@ export default function Benchmark({ values, settings }) {
   }
 
   return (
-    <div className={"benchmark-root"}>
-      <div>Target: {settings.benchmarkValue}</div>
-      <div className={"benchmark-current"}>
-        <p>Current:</p>
-        <p style={{ color: color() }}>{current()}</p>
-      </div>
+    <div>
+      <Number style={{ color: color() }} values={values} settings={settings} />
     </div>
   );
 }
