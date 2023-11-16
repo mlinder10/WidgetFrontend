@@ -1,5 +1,5 @@
 import React from "react";
-import { isWithinOneWeek } from "../Functions";
+import { isWithinOneWeek } from "../utilities/Functions";
 import { Loader } from "monday-ui-react-core";
 
 export default function Ticker({ values, ticker, settings }) {

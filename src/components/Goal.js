@@ -1,14 +1,26 @@
 import React from "react";
 
 export default function Goal({ values, settings }) {
+  function getGoal() {
+    try {
+      console.log(parseInt(settings.goal))
+      console.log(typeof parseInt(settings.goal))
+      if (typeof parseInt(settings.goal) === NaN) return 0;
+      return parseInt(settings.goal);
+    } catch {
+      return 0;
+    }
+  }
+
   function percentage() {
     try {
-      const goal = parseInt(settings.goal);
+      const goal = getGoal();
+      if (goal === 0) return 1;
       return current() / goal > 1
         ? 1
         : Math.round((current() / goal) * 100) / 100;
     } catch {
-      return 0;
+      return 1;
     }
   }
 
@@ -45,7 +57,7 @@ export default function Goal({ values, settings }) {
     <div className="goal-root">
       <div className="goal-info">
         <p className="goal-current">{current()}</p>
-        <p className="goal-goal"> / {parseInt(settings.goal)}</p>
+        <p className="goal-goal"> / {getGoal()}</p>
       </div>
       <div className="goal-outline">
         <div
