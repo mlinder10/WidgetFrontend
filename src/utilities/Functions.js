@@ -6,6 +6,7 @@ export const boardsQuery = (ids) => {
       id
       name
       items {
+        id
         group {
           id
           title
@@ -21,23 +22,27 @@ export const boardsQuery = (ids) => {
   }`;
 };
 
-function checkGroup(item, settings, boardId) {
-  return !settings.groups.group_ids_per_board[boardId].includes(item.group.id);
+function checkGroup(item, settings, boardId, itemIds) {
+  return (
+    !settings?.groups?.group_ids_per_board[boardId]?.includes(
+      item?.group?.id
+    ) || !itemIds?.includes(parseInt(item.id))
+  );
 }
 
 function checkColumn(column, settings, boardId) {
   return (
-    !settings.columns[boardId].includes(column.id) ||
+    !settings?.columns[boardId]?.includes(column?.id) ||
     column.text === null ||
     column.text === ""
   );
 }
 
-export function sumFunc(boards, settings) {
+export function sumFunc(boards, settings, itemIds) {
   let sum = 0;
   for (const board of boards) {
     for (const item of board.items) {
-      if (checkGroup(item, settings, board.id)) {
+      if (checkGroup(item, settings, board.id, itemIds)) {
         continue;
       }
       for (const column of item.column_values) {
@@ -51,17 +56,17 @@ export function sumFunc(boards, settings) {
   return sum;
 }
 
-export function averageFunc(boards, settings) {
-  const sum = sumFunc(boards, settings);
-  const count = countFunc(boards, settings);
+export function averageFunc(boards, settings, itemIds) {
+  const sum = sumFunc(boards, settings, itemIds);
+  const count = countFunc(boards, settings, itemIds);
   return Math.floor((sum / count) * 100) / 100;
 }
 
-export function minFunc(boards, settings) {
+export function minFunc(boards, settings, itemIds) {
   let min = Infinity;
   for (const board of boards) {
     for (const item of board.items) {
-      if (checkGroup(item, settings, board.id)) {
+      if (checkGroup(item, settings, board.id, itemIds)) {
         continue;
       }
       for (const column of item.column_values) {
@@ -75,11 +80,11 @@ export function minFunc(boards, settings) {
   return min;
 }
 
-export function maxFunc(boards, settings) {
+export function maxFunc(boards, settings, itemIds) {
   let max = -Infinity;
   for (const board of boards) {
     for (const item of board.items) {
-      if (checkGroup(item, settings, board.id)) {
+      if (checkGroup(item, settings, board.id, itemIds)) {
         continue;
       }
       for (const column of item.column_values) {
@@ -93,11 +98,11 @@ export function maxFunc(boards, settings) {
   return max;
 }
 
-export function countFunc(boards, settings) {
+export function countFunc(boards, settings, itemIds) {
   let count = 0;
   for (const board of boards) {
     for (const item of board.items) {
-      if (checkGroup(item, settings, board.id)) {
+      if (checkGroup(item, settings, board.id, itemIds)) {
         continue;
       }
       for (const column of item.column_values) {
@@ -111,11 +116,11 @@ export function countFunc(boards, settings) {
   return count;
 }
 
-export function medianFunc(boards, settings) {
+export function medianFunc(boards, settings, itemIds) {
   let vals = [];
   for (const board of boards) {
     for (const item of board.items) {
-      if (checkGroup(item, settings, board.id)) {
+      if (checkGroup(item, settings, board.id, itemIds)) {
         continue;
       }
       for (const column of item.column_values) {

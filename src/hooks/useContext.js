@@ -17,14 +17,30 @@ const monday = mondaySdk();
 export default function useContext() {
   const [workspaceId, setWorkspaceId] = useState(0);
   const [boards, setBoards] = useState([]);
-  const [settings, setSettings] = useState({});
+  const [settings, setSettings] = useState(undefined);
   const [values, setValues] = useState(undefined);
   const [ticker, setTicker] = useState(undefined);
   const [theme, setTheme] = useState("dark");
+  const [itemIds, setItemIds] = useState([]);
 
   useEffect(() => {
+    async function fetchBoards(ids) {
+      try {
+        const res = await monday.api(boardsQuery(ids));
+        setBoards(res.data.boards);
+        setWorkspaceId(res.data.boards[0].workspace_id);
+        console.log("Boards", res.data.boards);
+      } catch {
+        return [];
+      }
+    }
+
+    monday.listen("itemIds", (res) => {
+      setItemIds(res.data);
+      console.log("itemIds", res.data);
+    });
+
     monday.listen("context", (res) => {
-      console.log(res.data)
       fetchBoards(res.data.boardIds, settings?.columns);
       setTheme(res.data.theme);
     });
@@ -34,49 +50,39 @@ export default function useContext() {
   }, []);
 
   useEffect(() => {
+    function updateValues() {
+      if (settings?.type === undefined) return;
+      const newValues = {
+        sum: sumFunc(boards, settings, itemIds),
+        min: minFunc(boards, settings, itemIds),
+        max: maxFunc(boards, settings, itemIds),
+        average: averageFunc(boards, settings, itemIds),
+        count: countFunc(boards, settings, itemIds),
+        median: medianFunc(boards, settings, itemIds),
+      };
+      setValues(newValues);
+    }
+
     updateValues();
-  }, [boards, settings]);
+  }, [boards, settings, itemIds]);
 
   useEffect(() => {
+    async function fetchTickerValues() {
+      try {
+        const res = await axios.post(
+          backendUrl,
+          { id: workspaceId, ...values },
+          { headers: { Authorization: apiKey } }
+        );
+        setTicker(res.data.ticker);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     if (typeof workspaceId === "number" && values !== undefined)
       fetchTickerValues();
   }, [workspaceId, values]);
 
-  function updateValues() {
-    if (settings.type === undefined) return;
-    const newValues = {
-      sum: sumFunc(boards, settings),
-      min: minFunc(boards, settings),
-      max: maxFunc(boards, settings),
-      average: averageFunc(boards, settings),
-      count: countFunc(boards, settings),
-      median: medianFunc(boards, settings),
-    };
-    setValues(newValues);
-  }
-
-  async function fetchBoards(ids) {
-    try {
-      const res = await monday.api(boardsQuery(ids));
-      setBoards(res.data.boards);
-      setWorkspaceId(res.data.boards[0].workspace_id);
-    } catch {
-      return [];
-    }
-  }
-
-  async function fetchTickerValues() {
-    try {
-      const res = await axios.post(
-        backendUrl,
-        { id: workspaceId, ...values },
-        { headers: { Authorization: apiKey } }
-      );
-      setTicker(res.data.ticker);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  return { settings, values, ticker, theme };
+  return { settings, values, ticker, theme, itemIds };
 }

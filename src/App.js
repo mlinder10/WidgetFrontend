@@ -9,7 +9,7 @@ import Goal from "./components/Goal";
 import useContext from "./hooks/useContext";
 
 export default function App() {
-  const { settings, values, ticker, theme } = useContext();
+  const { settings, values, ticker, theme, itemIds } = useContext();
 
   if (settings?.type === undefined || values === undefined)
     return (
