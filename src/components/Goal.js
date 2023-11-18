@@ -23,20 +23,7 @@ export default function Goal({ values, settings }) {
   }
 
   function current() {
-    switch (settings.function) {
-      case "sum":
-        return values.sum;
-      case "min":
-        return values.min;
-      case "max":
-        return values.max;
-      case "median":
-        return values.median;
-      case "average":
-        return values.average;
-      case "count":
-        return values.count;
-    }
+    return values[settings.function]
   }
 
   function width() {

@@ -9,7 +9,7 @@ import Goal from "./components/Goal";
 import useContext from "./hooks/useContext";
 
 export default function App() {
-  const { settings, values, ticker, theme, itemIds } = useContext();
+  const { settings, values, tickerValues, theme } = useContext();
 
   if (settings?.type === undefined || values === undefined)
     return (
@@ -24,7 +24,7 @@ export default function App() {
         <Number values={values} settings={settings} />
       )}
       {settings.type === "ticker" && (
-        <Ticker values={values} ticker={ticker} settings={settings} />
+        <Ticker values={values} tickerValues={tickerValues} settings={settings} />
       )}
       {settings.type === "benchmark" && (
         <Benchmark values={values} settings={settings} />

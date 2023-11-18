@@ -2,20 +2,7 @@ import React from "react";
 
 export default function Number({ style, values, settings }) {
   function value() {
-    switch (settings.function) {
-      case "sum":
-        return values.sum
-      case "min":
-        return values.min
-      case "max":
-        return values.max
-      case "count":
-        return values.count
-      case "average":
-        return values.average
-      case "median":
-        return values.median
-    }
+    return values[settings.function]
   }
 
   function units() {
